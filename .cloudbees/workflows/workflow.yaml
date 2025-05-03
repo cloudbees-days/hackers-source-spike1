@@ -187,7 +187,6 @@ jobs:
           kustomization-base-dir: ${{ cloudbees.workspace }}/k8s/base
           kustomization-overlays-dir: ${{ cloudbees.workspace }}/k8s/overlays/prod
           kustomize-image: '{"name":"ldonleycb/hackers-organized","newName":"ldonleycb/hackers-organized","newTag":"${{ cloudbees.scm.sha }}"}'
-          environment-variables: "{}"
       - name: Publish evidence
         uses: cloudbees-io/publish-evidence-item@v1
         with:
