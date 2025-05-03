@@ -10,6 +10,8 @@ permissions:
   scm-token-own: read
   scm-token-org: read
   id-token: write
+env:
+  version: 1.0.1
 jobs:
   test:
     steps:
@@ -79,7 +81,7 @@ jobs:
         name: Build container image
         kind: build
         with:
-          destination: ${{ secrets.DOCKERHUB_USER }}/hackers-organized:${{ cloudbees.scm.sha }},${{ secrets.DOCKERHUB_USER }}/hackers-organized:latest
+          destination: ${{ secrets.DOCKERHUB_USER }}/hackers-organized:${{ cloudbees.scm.sha }},${{ secrets.DOCKERHUB_USER }}/hackers-organized:${{ env.version }}
           tar-path: container-image.tar
           build-args: BUILDKIT_CONTEXT_KEEP_GIT_DIR=1,BUILDKIT_INLINE_CACHE=1
       - uses: calculi-corp/assets-plugin-chain-utils/upload-binary@v1
@@ -184,6 +186,7 @@ jobs:
         with:
           kustomization-base-dir: ${{ cloudbees.workspace }}/k8s/base
           kustomization-overlays-dir: ${{ cloudbees.workspace }}/k8s/overlays/prod
+          kustomize-image: '{"name":"ldonleycb/hackers-organized","newName":"ldonleycb/hackers-organized","newTag":"${{ cloudbees.scm.sha }}"}'
           environment-variables: "{}"
       - name: Publish evidence
         uses: cloudbees-io/publish-evidence-item@v1
