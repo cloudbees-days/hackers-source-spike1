@@ -9,7 +9,5 @@ images:
 - name: ldonleycb/hackers-organized
   newTag: latest
 
-labels:
-- includeSelectors: true
-  pairs:
-    app: hackers-organized
+commonLabels:
+  app: hackers-organized
